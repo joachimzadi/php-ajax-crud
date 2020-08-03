@@ -17,10 +17,9 @@
   width: 50%;
   margin: 2rem auto;
   border: 1px solid #5a6268;
-
-  form {
-    margin: 1.5rem;
-  }
+}
+.monForm form {
+  margin: 1.5rem;
 }
 
 .titreForm {
@@ -32,12 +31,12 @@
   background-color: #01579b;
 }
 
-.table {
-  th, td {
-    border: 1px solid #dee2e6;
-  }
+.table th, .table td {
+  border: 1px solid #dee2e6;
 }
 
 .masquer {
   display: none;
 }
+
+/*# sourceMappingURL=style.css.map */
