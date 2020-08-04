@@ -3,35 +3,45 @@ require_once 'functions/helper.php';
 
 $connexion = db_connexion();
 
-$sql_select_all = "select * from messages";
-$result_select_all = $connexion->query($sql_select_all);
-$messages = $result_select_all->fetchAll(PDO::FETCH_ASSOC);
-
-if (!empty($_POST['save'])) {
-    $titre = $_POST['titre'];
-    $description = $_POST['description'];
-    $sql_insert = "insert into messages(titre, description) values (?, ?)";
-
-    $req_preparee = $connexion->prepare($sql_insert);
+//Chargement des données en BDD
+if (!empty($_GET['all'])) {
+    $sql = "select * from stagiaires";
     try {
-        $result_insert = $req_preparee->execute([$titre, $description]);
+        $stagiaires = $connexion->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($stagiaires, JSON_THROW_ON_ERROR | true, 512);
+    } catch (PDOException|JsonException $e) {
+        exit($e->getMessage());
+    }
+}
+
+//En cas d'insertion
+if (!empty($_POST['save'])) {
+    $prenom = $_POST['prenom'];
+    $email = $_POST['email'];
+    $ville = $_POST['ville'];
+    $sql = "insert into stagiaires(prenom, email,ville) values (?, ?, ?)";
+    try {
+        $req_preparee = $connexion->prepare($sql);
+        $req_preparee->execute([$prenom, $email, $ville]);
+        exit();
     } catch (PDOException $e) {
         exit($e->getMessage());
     }
 }
 
-//if (isset($_POST['save'])) {
-//    $nom = $_POST['nom'];
-//    $contenu = $_POST['contenu'];
-//    $sql = "INSERT INTO commentaires (nom, contenu) VALUES ('{$nom}', '{$contenu}')";
-//    if (mysqli_query($conn, $sql)) {
-//        $id = mysqli_insert_id($conn);
-//        $saved_comment = '<div class="comment_box">
-//      		<span class="delete" data-id="' . $id . '" >delete</span>
-//      		<span class="edit" data-id="' . $id . '">edit</span>
-//      		<div class="display_name">' . $nom . '</div>
-//      		<div class="comment_text">' . $contenu . '</div>
-//      	</div>';
-//        echo $saved_comment;
-//    }
-//}
+//En cas de mis à jour
+if (!empty($_POST['update'])) {
+    $id = $_POST['id'];
+    $prenom = $_POST['prenom'];
+    $email = $_POST['email'];
+    $ville = $_POST['ville'];
+    $sql = "update stagiaires set prenom = ?, email = ?, ville = ? where id = ?";
+
+    try {
+        $req_preparee = $connexion->prepare($sql);
+        $req_preparee->execute([$prenom, $email, $ville, $id]);
+        exit();
+    } catch (PDOException $e) {
+        exit($e->getMessage());
+    }
+}

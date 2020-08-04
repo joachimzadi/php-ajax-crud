@@ -4,10 +4,10 @@ use ajax_php_db;
 
 create table if not exists Stagiaires
 (
-    id        int unsigned auto_increment not null,
-    prenom    nvarchar(255) unique        not null,
-    email nchar(10),
-    ville     nvarchar(255),
+    id     int unsigned auto_increment not null,
+    prenom nvarchar(255) unique        not null,
+    email  nvarchar(255) unique not null ,
+    ville  nvarchar(255),
     constraint pk_stagiaires primary key (id)
 );
 

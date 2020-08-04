@@ -7,6 +7,9 @@
 
     <title>CRUD-AJAX-PHP</title>
 
+    <!-- FONT AWESOME KIT -->
+    <script src="https://kit.fontawesome.com/ec63adeb54.js" defer crossorigin="anonymous"></script>
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/css/bootstrap.css"/>
     <link rel="stylesheet" href="assets/css/style.css"/>
@@ -14,9 +17,10 @@
 <body>
 
 <div class="container">
-    <div id="monForm" class="monForm">
+    <div class="monForm">
         <div class="titreForm">Ajouter un stagiaire</div>
-        <form>
+        <form id="mon_form">
+            <input id="id" type="hidden" name="id">
             <div class="form-group">
                 <label for="prenom">Prénom</label>
                 <input type="text" class="form-control" id="prenom" required
@@ -47,6 +51,7 @@
                 <th scope="col">Prénom</th>
                 <th scope="col">Contact</th>
                 <th scope="col">Ville</th>
+                <th scope="col" colspan="2">Actions</th>
             </tr>
             </thead>
             <tbody id="stagiaires-body"></tbody>
