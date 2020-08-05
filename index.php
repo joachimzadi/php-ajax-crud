@@ -47,7 +47,7 @@
         <table class="table table-hover">
             <thead class="thead-dark text-center">
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">Id</th>
                 <th scope="col">Prénom</th>
                 <th scope="col">Contact</th>
                 <th scope="col">Ville</th>
@@ -65,6 +65,6 @@
 <script src="assets/js/jquery.js"></script>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/script.js"></script>
+<script src="assets/js/script.js" defer></script>
 </body>
 </html>
