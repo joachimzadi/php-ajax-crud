@@ -13,6 +13,12 @@ $(document).ready(function () {
         insert();
         allDatas();
     });
+
+    //Mise à jour des datas
+    $("#submit_modifier").on('click', function () {
+        update();
+        allDatas();
+    });
 });
 
 /**
@@ -28,18 +34,17 @@ function allDatas() {
         //On vide le contenu du tableau
         $("#stagiaires-body").empty();
         response.forEach(ligne => {
-                $("#stagiaires-body").append(
-                    `<tr>`
-                    + `<td>${ligne.id}</td>`
-                    + `<td>${ligne.prenom}</td>`
-                    + `<td>${ligne.email}</td>`
-                    + `<td>${ligne.ville}</td>`
-                    + `<td class="text-center text-info"><span><i class="fas fa-pen-fancy"></i></span></td>`
-                    + `<td class="text-center text-danger"><span><i class="fas fa-trash-alt"></i></span></td>`
-                    + `</tr>`
-                );
-            }
-        );
+            $("#stagiaires-body").append(
+                `<tr>`
+                + `<td>${ligne.id}</td>`
+                + `<td class="prenom">${ligne.prenom}</td>`
+                + `<td class="email">${ligne.email}</td>`
+                + `<td class="ville">${ligne.ville}</td>`
+                + `<td class="text-center text-info"><span id="${ligne.id}" data-id="${ligne.id}" onclick="edit(${ligne.id})"><i class="fas fa-pen-fancy"></i></span></td>`
+                + `<td class="text-center text-danger"><span><i class="fas fa-trash-alt"></i></span></td>`
+                + `</tr>`
+            );
+        });
     });
 }
 
@@ -60,5 +65,50 @@ function insert() {
         $("#prenom").val('');
         $("#email").val('');
         $("#ville").val('');
+    })
+}
+
+/**
+ * Permet l'edition d'un stagiaire
+ * @param id
+ */
+function edit(id) {
+    //A but pédagogique
+    //let edit_id = $(`#${id}`).data('id');
+    let prenom = $(`#${id}`).parent().siblings('.prenom').text();
+    let email = $(`#${id}`).parent().siblings('.email').text();
+    let ville = $(`#${id}`).parent().siblings('.ville').text();
+
+    $("#id").val(id);
+    $("#prenom").val(prenom);
+    $("#email").val(email);
+    $("#ville").val(ville);
+
+    $("#submit_ajouter").hide();
+    $("#submit_modifier").show();
+}
+
+/**
+ * Permet de faire la maj d'un stagiaire
+ */
+function update() {
+    let prenom = $("#prenom").val();
+    let email = $("#email").val();
+    let ville = $("#ville").val();
+    let id = $("#id").val();
+
+    $.ajax({
+        method: "POST",
+        url: "server.php",
+        data: {update: 1, id: id, prenom: prenom, email: email, ville: ville}
+    }).then(function () {
+        //En cas de succes, on vide les champs
+        $("#prenom").val('');
+        $("#email").val('');
+        $("#ville").val('');
+        $("#id").val('');
+
+        $("#submit_ajouter").show();
+        $("#submit_modifier").hide();
     })
 }

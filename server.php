@@ -30,3 +30,19 @@ if (!empty($_POST['insert'])) {
         $e->getMessage();
     }
 }
+
+if (!empty($_POST['update'])){
+    $prenom = $_POST['prenom'];
+    $email = $_POST['email'];
+    $ville = $_POST['ville'];
+    $id = $_POST['id'];
+
+    $sql = "update stagiaires set prenom = ?, email = ?, ville = ? where id = ?";
+
+    try {
+        $req_preparee = $connexion->prepare($sql);
+        $req_preparee->execute([$prenom, $email, $ville, $id]);
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
